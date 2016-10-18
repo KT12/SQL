@@ -1,3 +1,4 @@
+### Notes for Learning MySQL and MariaDB Chapter 4
 
 CREATE TABLE `birds_wing_shapes` (
   `wing_id` char(2) COLLATE latin1_bin NOT NULL,
