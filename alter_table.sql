@@ -250,3 +250,76 @@ WHERE Key_name = 'human_names' \G
 ALTER TABLE conservation_status
 DROP PRIMARY KEY,
 CHANGE status_id conservation_status_id INT PRIMARY KEY AUTO_INCREMENT;
+
+
+### EXERCISES
+### 1
+
+ALTER TABLE birds_details
+ADD COLUMN migrate INT,
+ADD COLUMN bird_feeder INT,
+CHANGE COLUMN description bird_description TEXT;
+
+SHOW CREATE TABLE birds_details;
+
+### 2
+
+CREATE TABLE habitat_codes
+(habitat_id INT AUTO_INCREMENT PRIMARY KEY,
+    habitat VARCHAR(25) );
+
+INSERT INTO habitat_codes (habitat)
+VALUES('Coasts'),('Deserts'),('Forests'),
+('Grasslands'),('Lakes, Rivers, Ponds'),
+('Marshes, Swamps'),('Mountains'),('Oceans'),
+('Urban');
+
+CREATE TABLE bird_habitats
+(bird_id INT,
+    habitat_id INT);
+
+DESCRIBE bird_habitats;
+DESCRIBE habitat_codes;
+
+SHOW CREATE TABLE bird_habitats;
+SHOW CREATE TABLE habitat_codes;
+
+RENAME TABLE bird_habitats to birds_habitats;
+
+### 3
+
+ALTER TABLE birds_habitats
+ADD UNIQUE birds_habitats (bird_id, habitat_id);
+
+SHOW CREATE TABLE birds_habitats;
+
+SELECT bird_id, common_name
+FROM birds;
+
+SELECT * FROM habitat_codes;
+
+INSERT INTO birds_habitats
+(bird_id, habitat_id)
+VALUES
+(2, 5),
+(3, 5),
+(3, 6);
+
+SELECT * FROM birds_habitats;
+
+### 4
+
+ALTER TABLE birds_habitats
+DROP KEY birds_habitats,
+ADD UNIQUE bird_habitats (bird_id, habitat_id);
+
+### 5
+
+SELECT * FROM birdwatchers.humans;
+
+ALTER TABLE birdwatchers.humans
+ADD COLUMN country_id CHAR(2),
+ADD COLUMN membership_type ENUM('basic', 'premium'),
+ADD COLUMN membership_expiration DATE;
+
+DESCRIBE birdwatchers.humans;
