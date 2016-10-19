@@ -227,5 +227,26 @@ SHOW TABLES IN rookery LIKE 'birds%';
 ### If you wanted to drop the old table
 DROP TABLE birds_old;
 
+### Trying to rename an index column results in an error:
 
+ALTER TABLE conservation_status
+CHANGE status_id conservation_status_id INT AUTO_INCREMENT PRIMARY KEY;
 
+SHOW INDEX FROM birdwatchers.humans \G
+
+EXPLAIN SELECT * FROM birdwatchers.humans
+WHERE name_last = 'Hollar' \G
+
+ALTER TABLE birdwatchers.humans
+ADD INDEX human_names (name_last, name_first);
+
+SHOW CREATE TABLE birdwatchers.humans \G
+
+SHOW INDEX FROM birdwatchers.humans
+WHERE Key_name = 'human_names' \G
+
+### Index must be dropped before column can be renamed
+### Drops the index but not the data contained.
+ALTER TABLE conservation_status
+DROP PRIMARY KEY,
+CHANGE status_id conservation_status_id INT PRIMARY KEY AUTO_INCREMENT;
