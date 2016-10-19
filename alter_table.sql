@@ -148,4 +148,84 @@ WHERE survey_id = 1
 AND question_id = 1
 GROUP BY answer WITH ROLLUP;
 
-# Returns empty set
+# Returns empty set  =/
+
+CREATE TABLE rookery.conservation_status
+(status_id INT AUTO_INCREMENT PRIMARY KEY,
+    conservation_category CHAR(10),
+    conservation_state CHAR(25) );
+
+INSERT INTO rookery.conservation_status
+(conservation_category, conservation_state)
+VALUES ('Extinct', 'Extinct'),
+('Extinct', 'Extinct in Wild'),
+('Threatened', 'Critically Endangered'),
+('Threatened', 'Endangered'),
+('Threatened', 'Vulnerable'),
+('Lower Risk', 'Conservation Dependent'),
+('Lower Risk', 'Near Threatened'),
+('Lower RIsk', 'Least Concern');
+
+SELECT * FROM rookery.conservation.status;
+
+ALTER TABLE birds_new
+CHANGE COLUMN endangered conservation_status_id INT DEFAULT 8;
+
+ALTER TABLE birds_new
+ALTER conservation_status_id SET DEFAULT 7;
+
+SHOW COLUMNS FROM birds_new LIKE 'conservation_status_id' \G
+
+ALTER TABLE birds_new
+ALTER conservation_status_id DROP DEFAULT;
+
+SELECT auto_increment
+FROM information_schema.tables
+WHERE table_name = 'birds';
+
+USE rookery
+
+# Below code will change auto-increment setting to start from 10 next
+ALTER TABLE birds
+AUTO_INCREMENT = 10;
+
+# Copy data into a new table
+
+CREATE TABLE birds_new LIKE birds;
+
+DESCRIBE birds;
+
+DESCRIBE birds_new;
+
+SELECT * FROM birds_new; #Empty set since no data copied
+
+# Tables identical in set-up except auto-increment
+
+SHOW CREATE TABLE birds \G
+
+ALTER TABLE birds_new
+AUTO_INCREMENT = 7;
+
+INSERT INTO birds_new
+SELECT * FROM birds;
+
+CREATE TABLE birds_details
+SELECT bird_id, description
+FROM birds;
+
+DESCRIBE birds_details;
+# Shows birds_details.bird_id does not AUTO_INCREMENT
+
+ALTER TABLE birds
+DROP COLUMN description;
+
+RENAME TABLE rookery.birds to rookery.birds_old,
+test.birds_new to rookery.birds;
+
+SHOW TABLES IN rookery LIKE 'birds%';
+
+### If you wanted to drop the old table
+DROP TABLE birds_old;
+
+
+
