@@ -92,4 +92,29 @@ ORDER BY scientific_name;
 
 SHOW COLUMNS FROM birds;
 
+SHOW COLUMNS FROM birds LIKE '%id';
 
+INSERT INTO birds
+(common_name, scientific_name, family_id, conservation_status_id)
+VALUES
+('Mountain Plover', 'Charadrius montanus', 103, 7);
+
+
+INSERT INTO birds
+(common_name, scientific_name, family_id, conservation_status_id)
+VALUES
+('Snowy Plover', 'Charadrius alexandrinus', 103, 7),
+('Black-bellied Plover', 'Pluvialis squatarola', 103, 7),
+('Pacific Golden Plover', 'Pluvialis fulva', 103, 7);
+
+# Connecting a few tables through SELECT statement
+
+SELECT common_name AS 'Bird',
+    birds.scientific_name AS 'Scientific Name',
+    bird_families.sicentific_name AS 'Family',
+    bird_orders.scientific_name AS 'Order'
+FROM birds,
+    bird_families,
+    bird_orders
+WHERE birds.family_id = bird_families.family_id
+AND bird_families.order_id = bird_orders.order_id;
