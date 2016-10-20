@@ -123,3 +123,78 @@ AND bird_families.order_id = bird_orders.order_id;
 INSERT INTO bird_families
 SET scientific_name = 'Rallidae',
 order_id = 113;
+
+### Exercises
+
+### 1
+
+INSERT INTO birds_body_shapes
+(body_id, body_shape)
+VALUES
+('HMB', 'Hummingbird'),
+('LLW', 'Long-Legged Wader'),
+('MSH', 'Marsh Hen'),
+('OWL', 'Owl'),
+('PCB', 'Perching Bird'),
+('PWB', 'Perching Water Bird'),
+('PGN', 'Pigeon'),
+('RPT', 'Raptor'),
+('SEA', 'Seabird'),
+('SHO', 'Shorebird'),
+('SWA', 'Swallow'),
+('TRC', 'Tree Clinging'),
+('WTF', 'Waterfowl'),
+('WDF', 'Woodland Fowl');
+
+### 2
+
+INSERT INTO birds_wing_shapes
+SET wing_id = 'BD',
+wing_shape = 'Broad';
+
+INSERT INTO birds_wing_shapes
+SET wing_id = 'RD',
+wing_shape = 'Round';
+
+INSERT INTO birds_wing_shapes
+SET wing_id = 'PT',
+wing_shape = 'Pointed';
+
+INSERT INTO birds_wing_shapes
+SET wing_id = 'TP',
+wing_shape = 'Tapered';
+
+INSERT INTO birds_wing_shapes
+SET wing_id = 'LG',
+wing_shape = 'Long';
+
+INSERT INTO birds_wing_shapes
+SET wing_id = 'VL',
+wing_shape = 'Very Long';
+
+### 3
+
+INSERT INTO birds_bill_shapes
+(bill_id, bill_shape)
+VALUES
+('AP', 'All Purpose'),
+('CN', 'Cone'),
+('CU', 'Curved'),
+('DG', 'Dagger'),
+('HK', 'Hooked'),
+('HS', 'Hooked Seabird'),
+('ND', 'Needle'),
+('ST', 'Spatulate'),
+('SP', 'Specialized');
+
+### 4
+
+SELECT * FROM birds_body_shapes
+WHERE body_shape = 'Woodland Fowl';
+
+REPLACE INTO birds_body_shapes
+(body_id, body_shape)
+VALUES
+('WDF', 'Upland Ground Birds');
+
+SELECT * FROM birds_body_shapes;
