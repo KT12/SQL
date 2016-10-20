@@ -111,10 +111,15 @@ VALUES
 
 SELECT common_name AS 'Bird',
     birds.scientific_name AS 'Scientific Name',
-    bird_families.sicentific_name AS 'Family',
+    bird_families.scientific_name AS 'Family',
     bird_orders.scientific_name AS 'Order'
 FROM birds,
     bird_families,
     bird_orders
 WHERE birds.family_id = bird_families.family_id
 AND bird_families.order_id = bird_orders.order_id;
+
+# Inserting emphatically
+INSERT INTO bird_families
+SET scientific_name = 'Rallidae',
+order_id = 113;
