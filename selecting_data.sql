@@ -150,4 +150,55 @@ AND families.order_id = orders.order_id
 AND orders.scientific_name = 'Pelecaniformes'
 GROUP BY Family;
 
+### Exercises
+### 1
 
+### No pigeons in table, will use duck instead 
+
+SELECT common_name as 'Bird'
+FROM birds
+WHERE common_name LIKE '%Duck%'
+ORDER BY common_name;
+
+SELECT common_name as 'Bird'
+FROM birds
+WHERE common_name LIKE '%Duck%'
+ORDER BY common_name
+LIMIT 0, 10;
+
+SELECT common_name as 'Bird'
+FROM birds
+WHERE common_name LIKE '%Duck%'
+ORDER BY common_name
+LIMIT 10, 10;
+
+### 2
+
+SELECT scientific_name AS 'Order',
+brief_description AS 'Types of Birds in Order'
+FROM bird_orders;
+
+SELECT common_name AS 'Common Name of Bird',
+scientific_name AS 'Scientific Name of Bird'
+FROM birds
+WHERE common_name <> ''
+ORDER BY common_name
+LIMIT 25;
+
+SELECT birds.common_name AS 'Common Name of Bird',
+birds.scientific_name AS 'Scientific Name of Bird',
+orders.scientific_name AS 'Order',
+orders.brief_description AS 'Types of Birds in Order'
+FROM birds, bird_families AS families, bird_orders AS orders
+WHERE birds.family_id = families.family_id
+AND families.order_id = orders.order_id
+AND birds.common_name <> ''
+ORDER BY birds.common_name
+LIMIT 25;
+
+### 3
+
+SELECT common_name AS 'Type of Columbidae'
+FROM birds
+WHERE common_name REGEXP 'Pigeon|Dove';
+## DB contains no doves or pigeons
