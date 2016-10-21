@@ -144,3 +144,30 @@ AND email_address LIKE '%yahoo.com'
 AND humans.human_id = prize_winners.human_id;
 
 ### ALWAYS back up before using DELETE FROM
+
+### 1
+
+CREATE DATABASE backup;
+
+CREATE TABLE backup.humans_copy
+SELECT * FROM birdwatchers.humans;
+
+CREATE TABLE backup.prize_winners_copy
+SELECT * FROM birdwatchers.prize_winners;
+
+SELECT * FROM backup.humans_copy;
+
+SELECT * FROM backup.prize_winners_copy;
+
+### 2
+
+SELECT * FROM humans
+WHERE country_id = 'au';
+
+UPDATE humans
+SET membership_type = 'premium',\
+membership_expiration = DATE_ADD(CURDATE(), INTERVAL 1 YEAR)
+WHERE country_id = 'au';
+
+### 3
+
