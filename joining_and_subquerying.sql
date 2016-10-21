@@ -107,4 +107,45 @@ LEFT JOIN conservation_status USING(conservation_status_id)
 JOIN bird_families USING(family_id)
 WHERE bird_families.scientific_name = 'Ardeidae';
 
+### SUBQUERIES
 
+SELECT scientific_name AS Family
+FROM bird_families
+WHERE order_id = 
+    (SELECT order_id
+    FROM bird_orders
+    WHERE scientific_name = 'Galliformes');
+
+
+SELECT * FROM 
+    (SELECT common_name AS 'Bird',
+    families.scientific_name AS 'Family'
+    FROM birds
+    JOIN bird_families AS families USING(family_id)
+    JOIN bird_orders AS orders USING(order_id)
+    WHERE common_name <> ''
+    AND families.scientific_name IN
+        (SELECT DISTINCT families.scientific_name AS 'Family'
+        FROM bird_families AS families
+        JOIN bird_orders AS orders USING(order_id)
+        WHERE orders.scientific_name = 'Galliformes'
+        ORDER BY Family)
+    ORDER BY RAND()) AS derived_1
+GROUP BY (Family);
+
+SELECT family AS 'Bird Family',
+COUNT(*) AS 'Number of Birds'
+FROM
+    (SELECT families.scientific_name AS family
+    FROM birds
+    JOIN bird_families AS families USING(family_id)
+    WHERE families.scientific_name IN('Pelecanidae', 'Ardeidae')) AS derived_1
+GROUP BY family;
+
+SELECT family AS 'Bird Family',
+COUNT(*) AS 'Number of Birds'
+FROM
+    (SELECT families.scientific_name AS family
+    FROM birds
+    JOIN bird_families AS families USING(family_id)) AS derived_1
+GROUP BY family;
