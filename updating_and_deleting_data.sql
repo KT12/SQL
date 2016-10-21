@@ -169,5 +169,42 @@ SET membership_type = 'premium',\
 membership_expiration = DATE_ADD(CURDATE(), INTERVAL 1 YEAR)
 WHERE country_id = 'au';
 
+SELECT * FROM humans
+WHERE country_id = 'au';
+
 ### 3
 
+DELETE FROM humans, prize_winners
+USING humans JOIN prize_winners
+WHERE name_first = 'Barry'
+AND name_last = 'Pilson'
+AND humans.human_id = prize_winners.human_id;
+
+SELECT * FROM humans;
+
+SELECT * FROM prize_winners;
+
+### 4
+DELETE FROM humans;
+
+DELETE FROM prize_winners;
+
+SELECT * FROM humans;
+
+SELECT * FROM prize_winners;
+
+# Now that rows were deleted, replace them from backup
+
+INSERT INTO humans
+SELECT * FROM backup.humans_copy;
+
+INSERT INTO prize_winners
+SELECT * FROM backup.prize_winners_copy;
+
+SELECT * FROM humans;
+
+SELECT * FROM prize_winners;
+
+DROP TABLE backup.humans_copy;
+
+DROP TABLE backup.prize_winners_copy;
