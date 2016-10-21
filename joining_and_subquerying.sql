@@ -149,3 +149,32 @@ FROM
     FROM birds
     JOIN bird_families AS families USING(family_id)) AS derived_1
 GROUP BY family;
+
+
+### Exercises
+
+### 1
+
+SELECT CONCAT(name_first, ' ', name_last) AS Birder,
+COUNT(*) AS Points
+FROM birdwatchers.humans
+JOIN birdwatchers.bird_sightings USING(human_id)
+JOIN rookery.birds USING(bird_id)
+JOIN rookery.bird_families USING(family_id)
+WHERE rookery.bird_families.scientific_name = 'Galliformes'
+ORDER BY Birder;
+
+### 2
+
+SELECT * FROM
+(
+SELECT CONCAT(name_first, ' ', name_last) AS Birder,
+COUNT(DISTINCT birdwatchers.bird_sightings.bird_id) AS Points
+FROM birdwatchers.humans
+JOIN birdwatchers.bird_sightings USING(human_id)
+JOIN rookery.birds USING(bird_id)
+JOIN rookery.bird_families USING(family_id)
+WHERE rookery.bird_families.scientific_name = 'Galliformes')
+AS derived_1
+WHERE Points > 5
+ORDER BY Birder;
