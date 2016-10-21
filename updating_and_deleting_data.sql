@@ -59,5 +59,17 @@ SET winner_date = CURDATE()
 WHERE winner_date IS NULL
 ORDER BY RAND()
 LIMIT 2;
+### Text claimed there would be warnings but
+### none observed
+
+SHOW WARNINGS \G
+
+UPDATE prize_winners, humans
+SET winner_date = NULL,
+    prize_chosen = NULL,
+    prize_sent = NULL
+WHERE country_id = 'uk'
+AND prize_winners.human_id = humans.human_id;
+SELECT * FROM prize_winners;
 
 
