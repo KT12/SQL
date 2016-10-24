@@ -179,3 +179,33 @@ FROM birding_events;
 ALTER TABLE birding_events
 DROP COLUMN event_date, 
 DROP COLUMN start_time;
+
+### Exercises
+### 1
+
+
+SELECT CONCAT(name_first, SPACE(1), name_last) AS 'Birdwatcher',
+DATE_FORMAT(join_date, '%a., %b. %e, %Y') AS 'Date Joined',
+DATE_FORMAT(membership_expiration, '%a., %b. %e, %Y') AS 'Membership Expiration Date'
+FROM humans
+WHERE country_id = 'uk';
+
+### 2
+SELECT CONCAT(name_first, SPACE(1), name_last) AS 'Birdwatcher',
+membership_expiration AS 'Membership Expiration Date'
+FROM humans
+order by membership_expiration;
+
+UPDATE humans
+SET membership_expiration = ADDDATE(membership_expiration, INTERVAL 1 MONTH),
+membership_expiration = ADDDATE(membership_expiration, INTERVAL 15 DAY)
+WHERE membership_expiration > '2014-06-30';
+
+UPDATE humans
+SET membership_expiration = DATE_SUB(membership_expiration, INTERVAL 5 DAY)
+WHERE membership_expiration > '2014-06-30';
+
+UPDATE humans
+SET membership_expiration = ADDDATE(membership_expiration, INTERVAL -10 DAY)
+WHERE membership_expiration > '2014-06-30';
+
